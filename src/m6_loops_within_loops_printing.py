@@ -84,7 +84,7 @@ def shape(r):
      +++!321-
       ++!21--
        +!1---
-
+ 
     Preconditions:  r is a positive number.
     For purposes of "lining up", assume r is a single digit.
     """
