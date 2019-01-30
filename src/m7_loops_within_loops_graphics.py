@@ -6,8 +6,8 @@ This problem provides practice at:
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Jiadi Wang.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 ###############################################################################
 # Students:
@@ -30,11 +30,12 @@ Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
 ###############################################################################
 
 import rosegraphics as rg
+import math
 
 
 def main():
     """ Calls the   TEST   functions in this module. """
-    run_test_hourglass()
+    # run_test_hourglass()
     run_test_many_hourglasses()
 
 
@@ -65,6 +66,25 @@ def run_test_hourglass():
 
 
 def hourglass(window, n, point, radius, color):
+    for k in range(2*n-1):
+        if 0<=k<n-1:
+            for j in range(n-k):
+                circle = rg.Circle(rg.Point(point.x-(n-k-1)*radius+2*j*radius, point.y-math.sqrt(3)*(n-1)*radius+k*radius*math.sqrt(3)),radius)
+                lines = rg.Line(rg.Point(point.x-(n-k-1)*radius+2*j*radius-radius, point.y-math.sqrt(3)*(n-1)*radius+k*radius*math.sqrt(3)),
+                                rg.Point(point.x-(n-k-1)*radius+2*j*radius+radius, point.y-math.sqrt(3)*(n-1)*radius+k*radius*math.sqrt(3)))
+                circle.fill_color=color
+                circle.attach_to(window)
+                lines.attach_to(window)
+                window.render()
+        if 2*n-1>k>=n-1:
+            for j in range(k+2-n):
+                circle = rg.Circle(rg.Point(point.x-(k+1-n)*radius+2*j*radius, point.y-math.sqrt(3)*(n-1)*radius+k*radius*math.sqrt(3)),radius)
+                lines = rg.Line(rg.Point(point.x-(k+1-n)*radius+2*j*radius-radius, point.y-math.sqrt(3)*(n-1)*radius+k*radius*math.sqrt(3)),
+                                rg.Point(point.x-(k+1-n)*radius+2*j*radius+radius, point.y-math.sqrt(3)*(n-1)*radius+k*radius*math.sqrt(3)))
+                circle.fill_color=color
+                circle.attach_to(window)
+                lines.attach_to(window)
+                window.render()
     """
     See   hourglass_picture.pdf   in this project for pictures that may
     help you better understand the following specification:
@@ -90,7 +110,7 @@ def hourglass(window, n, point, radius, color):
     a color that rosegraphics understands.
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #       We provided some tests for you (above).
     # -------------------------------------------------------------------------
     ###########################################################################
@@ -138,6 +158,20 @@ def run_test_many_hourglasses():
 
 
 def many_hourglasses(window, square, m, colors):
+    radius = square.length_of_each_side/2
+    for l in range(m):
+        center = rg.Point(square.center.x + ((l+1)**2 - 1)*radius,square.center.y)
+        rectangle = rg.Rectangle(rg.Point(square.center.x + ((l+1)**2 - 1)*radius-(l+1)*radius,square.center.y-radius-math.sqrt(3)*l*radius),
+                                 rg.Point(square.center.x + ((l+1)**2 - 1)*radius+(l+1)*radius,square.center.y+radius+math.sqrt(3)*l*radius))
+        if (l)// len(colors)==0:
+            color = colors[l]
+        if (l)// len(colors)>0:
+            color = colors[l-l//len(colors)*len(colors)]
+        hourglass(window,l+1,center,radius,color)
+        rectangle.attach_to(window)
+        window.render()
+
+
     """
     See   many_hourglasses_picture.pdf   in this project for pictures that may
     help you better understand the following specification:
