@@ -56,6 +56,19 @@ def run_test_shape():
 
 
 def shape(r):
+    for k in range(r):
+        for j in range(2*r+1):
+            if 0<=j<k:
+                print(' ', end='')
+            if r>j>=k:
+                print('+', end='')
+            if j==r:
+                print('!', end='')
+            if 2*r-k>=j>r:
+                print(2*r-k-j+1, end='')
+            if 2*r-k<j<=2*r:
+                print('-',end='')
+        print()
     """
     Prints a shape with r rows that looks like this example where r=7:
     +++++++!7654321
@@ -76,7 +89,7 @@ def shape(r):
     For purposes of "lining up", assume r is a single digit.
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #          Some tests are already written for you (above).
     #
     ###########################################################################
